@@ -28,15 +28,23 @@ jobs:
         run: echo "Express server has been changed"
   deploy-web:
     runs-on: ubuntu-latest
-    needs: paths-filter
-    if: ${{ needs.paths-filter.outputs.web == 'true' }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Filter web changes
+        uses: dorny/paths-filter@v2
+        id: web-changes
+        with:
+          filters: |
+            web:
+              -  web/**
       - name: Start web deployment 🚀
+        if: ${{ steps.web-changes.outputs.web }}
         run: echo "🐧 Deploying web ..."
-  deploy-server:
-    runs-on: ubuntu-latest
-    needs: paths-filter
-    if: ${{ needs.paths-filter.outputs.server == 'true' }}
-    steps:
-      - name: Start server deployement 🚀
-        run: echo "🐧 Deploying server ..."
+  # deploy-server:
+  #   runs-on: ubuntu-latest
+  #   needs: paths-filter
+  #   if: ${{ needs.paths-filter.outputs.server == 'true' }}
+  #   steps:
+  #     - name: Start server deployement 🚀
+  #       run: echo "🐧 Deploying server ..."
