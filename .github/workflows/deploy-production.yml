@@ -35,6 +35,7 @@ jobs:
         uses: dorny/paths-filter@v2
         id: web-changes
         with:
+          base: main
           filters: |
             web:
               -  "web/**"
