@@ -7,25 +7,25 @@ on:
     tags:
       - '*'
 jobs:
-  paths-filter:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          base: main
-          filters: |
-            web:
-              - 'web/**'
-            server: 
-              - 'server/**'
-      - name: Deploy web
-        if: steps.changes.outputs.web == 'true'
-        run: echo "FE source has been changed"
-      - name: Deploy server
-        if: steps.changes.outputs.server == 'true'
-        run: echo "Express server has been changed"
+  # paths-filter:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: dorny/paths-filter@v2
+  #       id: changes
+  #       with:
+  #         base: main
+  #         filters: |
+  #           web:
+  #             - 'web/**'
+  #           server: 
+  #             - 'server/**'
+  #     - name: Deploy web
+  #       if: steps.changes.outputs.web == 'true'
+  #       run: echo "FE source has been changed"
+  #     - name: Deploy server
+  #       if: steps.changes.outputs.server == 'true'
+  #       run: echo "Express server has been changed"
   deploy-web:
     runs-on: ubuntu-latest
     steps:
@@ -37,9 +37,9 @@ jobs:
         with:
           filters: |
             web:
-              -  web/**
+              -  "web/**"
       - name: Start web deployment 🚀
-        if: ${{ steps.web-changes.outputs.web }}
+        if: steps.web-changes.outputs.web == 'true'
         run: echo "🐧 Deploying web ..."
   # deploy-server:
   #   runs-on: ubuntu-latest
