@@ -2,8 +2,10 @@ name: deploy-production
 run-name: ${{ github.actor }} is deploying production
 on:
   push:
-    tags:
-      - "*"
+    branches:
+      - main
+    # tags:
+      # - "*"
 jobs:
   paths-filter:
     runs-on: ubuntu-latest
