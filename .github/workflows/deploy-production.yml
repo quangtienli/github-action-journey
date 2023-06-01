@@ -38,7 +38,7 @@ jobs:
           base: main
           filters: |
             web:
-              -  "web/**"
+              -  "web/**/*.js"
       - name: Start web deployment 🚀
         if: steps.web-changes.outputs.web == 'true'
         run: echo "🐧 Deploying web ..."
