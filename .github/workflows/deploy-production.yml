@@ -15,12 +15,10 @@ jobs:
       - uses: dorny/paths-filter@v2
         id: changes
         with:
-          base: main
+          base: ${{ github.ref }}
           filters: |
-            web:
-              - 'web/**'
-            server:
-              - 'server/**'
+            web: 'web/**'
+            server: 'server/**'
       - name: Deploy web
         if: steps.changes.outputs.web == 'true'
         run: echo "FE source has been changed"
